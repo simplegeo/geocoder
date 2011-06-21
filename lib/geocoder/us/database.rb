@@ -178,8 +178,16 @@ module Geocoder::US
         args = [city] + tokens.clone + [state]
       end
       metaphones = metaphone_placeholders_for tokens
+      # Addendum: Don't include unique or business ZIP codes when searching for
+      # addresses by place name, because weird things happen, like the point winding
+      # up out in the Pacific Ocean (thanks to the Farallons). Unlike unique ZIP codes,
+      # general ZIP codes have all been checked to ensure that they're actually within
+      # their ZCTA.
+      # 
       execute("SELECT *, levenshtein(?, city) AS city_score
-                FROM place WHERE city_phone IN (#{metaphones}) #{and_state} order by priority desc;", *args)
+                FROM place WHERE city_phone IN (#{metaphones}) #{and_state}
+                AND status NOT IN ('U','B')
+                ORDER BY PRIORITY DESC;", *args)
     end
 
     # Generate an SQL query and set of parameters against the feature and range
