@@ -1,3 +1,13 @@
+geocoder-us (2.0.1pre-1sg67) lucid; urgency=low
+
+  [ Schuyler Erle ]
+  * Fix "San Francisco, CA" by not geocoding place names to unique-type
+    ZIPs.
+
+  [ SimpleGeo Nerds ]
+
+ -- SimpleGeo Nerds <nerds@simplegeo.com>  Tue, 21 Jun 2011 21:49:48 +0000
+
 geocoder-us (2.0.1pre-1sg66) lucid; urgency=low
 
   [ Schuyler Erle ]
