@@ -1,3 +1,12 @@
+geocoder-us (2.0.1pre-1sg111) maverick; urgency=low
+
+  [ dsmith ]
+  * Update version
+
+  [ SimpleGeo Nerds ]
+
+ -- SimpleGeo Nerds <nerds@simplegeo.com>  Tue, 09 Aug 2011 18:16:41 +0000
+
 geocoder-us (2.0.1pre-1sg110) maverick; urgency=low
 
   * UNRELEASED
