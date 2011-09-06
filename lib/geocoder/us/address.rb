@@ -8,6 +8,7 @@ module Geocoder::US
     :street   => /(?:\b(?:\d+\w*|[a-z'-]+)\s*)+/io,
     :city     => /(?:\b[a-z'-]+\s*)+/io,
     :state    => Regexp.new(State.regexp.source + "\s*$", Regexp::IGNORECASE),
+    :country  => /\b(?:united states(?: of america)?|usa?)\b$/io,
     :zip      => /(\d{5})(?:-\d{4})?\s*$/o,
     :at       => /\s(at|@|and|&)\s/io,
     :po_box => /\b[P|p]*(OST|ost)*\.*\s*[O|o|0]*(ffice|FFICE)*\.*\s*[B|b][O|o|0][X|x]\b/
@@ -39,6 +40,7 @@ module Geocoder::US
     # Removes any characters that aren't strictly part of an address string.
     def clean (value)
       value.strip \
+           .gsub(/[()\[\]{}"]+/io, " ") \
            .gsub(/[^a-z0-9 ,'&@\/-]+/io, "") \
            .gsub(/\s+/o, " ")
     end
@@ -151,6 +153,8 @@ module Geocoder::US
     
     def parse
       text = @text.clone.downcase
+
+      text.sub! Match[:country], ""
 
       @zip = text.scan(Match[:zip])[-1]
       if @zip
