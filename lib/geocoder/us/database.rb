@@ -286,6 +286,8 @@ module Geocoder::US
       temp_db = "temp_" + rand(1<<32).to_s
       temp_table = "intersection_" + rand(1<<32).to_s
       execute "ATTACH DATABASE ':memory:' as #{temp_db};"
+      # avoid hitting a (configurable?) SQL variable limit in SQLite3 (defaults to 999)
+      fids = fids[0..247] if fids.length >= 495;
       begin
         # flush_statements # the CREATE/DROP TABLE invalidates prepared statements
         in_list = placeholders_for fids
